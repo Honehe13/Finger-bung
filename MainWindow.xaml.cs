@@ -27,15 +27,17 @@ namespace Fingerübung
         {
 
             player1 = new Spieler(true, "X");
-
             player2 = new Spieler(false, "O");
+
             InitializeComponent();
+
+            //Bindung der Property Wins an die Labels
             p1win.DataContext = player1;
             p2win.DataContext = player2;
         }
 
         
-
+        //Methode für Spieler 1
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Button btn = (Button)sender; 
@@ -135,10 +137,12 @@ namespace Fingerübung
                 MessageBox.Show("Spieler 2 hat gewonnen");
                 player2.Wins += 1;
             }
-            else
+            else //Abfangen von Fehler durch falschen Übergabewert.
             {
                 MessageBox.Show("Falscher Übergabewert in gewonnen(). " + XoderO);
             }
+
+            //Niemand kann mehr ziehen. Spiel vorbei
             player1.AmZug = false;
             player2.AmZug = false;
         }
@@ -201,6 +205,8 @@ namespace Fingerübung
             }
         }
 
+
+        //neues Spiel
         private void Neu_Click(object sender, RoutedEventArgs e)
         {
             //Buttons wieder zurücksetzten
@@ -222,10 +228,13 @@ namespace Fingerübung
             Spielfeld.Children.Remove(line);
         }
 
+        //Linie zeichnen, die den Gewinn darstellt. Übergeben wird die Zeile in der die Linie startet und die Zeile, wo sie endet
         private void drawWinningLine(int rowStart, int rowEnd)
         {
-            if ((rowStart <= 3 && rowStart > 0) && (rowEnd <= 3 && rowEnd > 0))
+            if ((rowStart <= 3 && rowStart > 0) && (rowEnd <= 3 && rowEnd > 0)) //Haben die Übergabeparameter gültige Werte?
             {
+                // Das Spielfeld wird zum Zeichnen der Linie gesechstelt, damit der Start bzw das Ende der Linie in der Mitte des Buttons liegt.
+                // Deshalb entspricht Zeile 2 der Hälfte des Feldes also 3/6 und Zeile 3 5/6
                 int y1 = 1;
                 int y2 = 1;
                 if (rowStart == 2)
@@ -244,20 +253,21 @@ namespace Fingerübung
                 line.X2 = window.Width * 5 / 6;
                 line.Y1 = window.Height * y1 / 6;
                 line.Y2 = window.Height * y2 / 6;
-                Grid.SetColumnSpan(line, 3);
+                Grid.SetColumnSpan(line, 3); //Line ist ein Element des Grids, deshalb braucht es Row und Column-Span um komplett sichtbar zu sein
                 Grid.SetRowSpan(line, 3);
-                Spielfeld.Children.Add(line);
+                Spielfeld.Children.Add(line); //Hinzufügen zum Grid.
             }
             else
             {
                 MessageBox.Show("Ungültiger Wert in drawWinningLine");
             }
         }
+        //Überladene Metode um vertikale Linien darzustellen
         private void drawWinningLine(int col)
         {
-            if (col <= 3 && col > 0)
+            if (col <= 3 && col > 0) //Hat der Übergabeparameter gültige Werte?
             {
-                
+                //Wieder die Sechstelung des X-Wertes
                 int x = 1;
                 
                 if (col == 2)

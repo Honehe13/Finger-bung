@@ -7,6 +7,7 @@ using System.ComponentModel;
 
 namespace Fingerübung
 {
+    //Spielerklasse erbt von INotifyPropertyChanged, da die Poperty Wins an die GUI gebunden ist. 
     class Spieler : INotifyPropertyChanged
     {
         private int wins = 0;
@@ -40,7 +41,7 @@ namespace Fingerübung
             set
             {
                 wins = value;
-                OnPropertyChanged("Wins");
+                OnPropertyChanged("Wins"); //Änderung des Wertes anzeigen
             }
 
         }
@@ -53,6 +54,7 @@ namespace Fingerübung
             }
         }
 
+        //Property Changed Event, damit die gebunde GUI den Wert aktualisiert
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged(string propertyName)
